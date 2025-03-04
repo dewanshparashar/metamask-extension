@@ -179,6 +179,8 @@ describe('switchEthereumChainHandler', () => {
           ],
         },
         getCaveat: mocks.getCaveat,
+        hasApprovalRequestsForOrigin: mocks.hasApprovalRequestsForOrigin,
+        origin: 'example.com',
         requestPermittedChainsPermissionIncrementalForOrigin:
           mocks.requestPermittedChainsPermissionIncrementalForOrigin,
         requestUserApproval: mocks.requestUserApproval,

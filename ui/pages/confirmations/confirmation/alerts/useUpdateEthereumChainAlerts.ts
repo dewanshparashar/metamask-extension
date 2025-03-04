@@ -6,7 +6,10 @@ import { useSelector } from 'react-redux';
 import { Alert } from '../../../../ducks/confirm-alerts/confirm-alerts';
 import { AlertActionKey } from '../../../../components/app/confirm/info/row/constants';
 import { Severity } from '../../../../helpers/constants/design-system';
-import { getApprovalsByOrigin } from '../../../../selectors';
+import {
+  getApprovalsByOrigin,
+  getPermissionsRequests,
+} from '../../../../selectors';
 import { useI18nContext } from '../../../../hooks/useI18nContext';
 
 const VALIDATED_APPROVAL_TYPES = [
@@ -20,14 +23,20 @@ export function useUpdateEthereumChainAlerts(
   const pendingConfirmationsFromOrigin = useSelector((state) =>
     getApprovalsByOrigin(state, pendingConfirmation?.origin),
   );
-
+  const permissionsRequests = useSelector(getPermissionsRequests);
+  const permissionsRequest = permissionsRequests.find(
+    (req) =>
+      (req.metadata as Record<string, string>)?.id === pendingConfirmation?.id,
+  );
   const t = useI18nContext();
+
   return useMemo(() => {
     if (
       pendingConfirmationsFromOrigin?.length <= 1 ||
-      !VALIDATED_APPROVAL_TYPES.includes(
-        pendingConfirmation?.type as ApprovalType,
-      )
+      (!VALIDATED_APPROVAL_TYPES.includes(
+        pendingConfirmation.type as ApprovalType,
+      ) &&
+        !permissionsRequest?.isLegacySwitchEthereumChain)
     ) {
       return [];
     }
