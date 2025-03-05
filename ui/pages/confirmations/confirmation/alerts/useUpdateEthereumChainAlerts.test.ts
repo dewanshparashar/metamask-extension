@@ -69,16 +69,16 @@ describe('useUpdateEthereumChainAlerts', () => {
           ...PENDING_APPROVAL_MOCK,
           type: ApprovalType.SwitchEthereumChain,
         }),
-        {
-          ...state,
-          metamask: {
-            ...state.metamask,
-            pendingApprovals: {
-              ...state.metamask.pendingApprovals,
-              [PENDING_APPROVAL_MOCK.id]: PENDING_APPROVAL_MOCK,
-            },
+      {
+        ...state,
+        metamask: {
+          ...state.metamask,
+          pendingApprovals: {
+            ...state.metamask.pendingApprovals,
+            [PENDING_APPROVAL_MOCK.id]: PENDING_APPROVAL_MOCK,
           },
         },
+      },
     );
     expect(result.current).toStrictEqual(SWITCH_ETH_CHAIN_ALERT);
   });
